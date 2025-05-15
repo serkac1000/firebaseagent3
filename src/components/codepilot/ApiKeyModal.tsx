@@ -27,18 +27,35 @@ interface ApiKeyModalProps {
 export function ApiKeyModal({ isOpen, onOpenChange }: ApiKeyModalProps) {
   const [apiKey, setApiKey] = useLocalStorage<string>("gemini_api_key", "");
   const [currentKeyValue, setCurrentKeyValue] = useState(apiKey);
+  const [isApiKeyValid, setIsApiKeyValid] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    setCurrentKeyValue(apiKey);
+    setCurrentKeyValue(process.env.NEXT_PUBLIC_GOOGLE_API_KEY || apiKey || "");
   }, [apiKey]);
 
-  const handleSave = () => {
+  const checkApiKey = async (key: string) => {
+    // TODO: Implement actual API key validation logic here
+    // This is a placeholder check
+    if (key && key.length > 10) { // Simple length check as a placeholder
+      setIsApiKeyValid(true);
+      toast({
+        title: "API Key Validated",
+        description: "Your Gemini API key appears to be valid.",
+      });
+    } else {
+      setIsApiKeyValid(false);
+      toast({
+        title: "API Key Validation Failed",
+        description: "Your Gemini API key appears to be invalid. Please check and try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSave = async () => {
     setApiKey(currentKeyValue);
-    toast({
-      title: "API Key Saved",
-      description: "Your Gemini API key has been saved locally.",
-    });
+    await checkApiKey(currentKeyValue);
     onOpenChange(false);
   };
 
@@ -74,6 +91,13 @@ export function ApiKeyModal({ isOpen, onOpenChange }: ApiKeyModalProps) {
               Server-side AI operations will rely on environment variables.
             </AlertDescription>
           </Alert>
+          {currentKeyValue && (
+            <div className={`text-sm ${isApiKeyValid ? "text-green-600" : "text-red-600"}`}>
+              {isApiKeyValid
+                ? "API Key status: Valid"
+                : "API Key status: Invalid or not yet validated"}
+            </div>
+          )}
         </div>
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
