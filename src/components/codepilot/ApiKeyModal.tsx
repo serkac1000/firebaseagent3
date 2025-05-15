@@ -18,6 +18,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface ApiKeyModalProps {
   isOpen: boolean;
@@ -28,34 +29,55 @@ export function ApiKeyModal({ isOpen, onOpenChange }: ApiKeyModalProps) {
   const [apiKey, setApiKey] = useLocalStorage<string>("gemini_api_key", "");
   const [currentKeyValue, setCurrentKeyValue] = useState(apiKey);
   const [isApiKeyValid, setIsApiKeyValid] = useState(false);
+  const [apiKeySource, setApiKeySource] = useState<'local' | 'env' | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    setCurrentKeyValue(process.env.NEXT_PUBLIC_GOOGLE_API_KEY || apiKey || "");
-  }, [apiKey]);
+    const envApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (envApiKey) {
+      setCurrentKeyValue(envApiKey);
+      setApiKeySource('env');
+      checkApiKey(envApiKey);
+    } else if (apiKey) {
+      setCurrentKeyValue(apiKey);
+      setApiKeySource('local');
+      checkApiKey(apiKey);
+    } else {
+      setCurrentKeyValue("");
+      setApiKeySource(null);
+      setIsApiKeyValid(false);
+    }
+  }, [apiKey]); // Depend on apiKey from local storage
 
   const checkApiKey = async (key: string) => {
-    // TODO: Implement actual API key validation logic here
-    // This is a placeholder check
-    if (key && key.length > 10) { // Simple length check as a placeholder
+    if (!key) {
+      setIsApiKeyValid(false);
+      return;
+    }
+    try {
+      const genAI = new GoogleGenerativeAI(key);
+      await genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' }).generateContent('test'); // Attempt a simple call
       setIsApiKeyValid(true);
       toast({
         title: "API Key Validated",
         description: "Your Gemini API key appears to be valid.",
       });
-    } else {
-      setIsApiKeyValid(false);
-      toast({
-        title: "API Key Validation Failed",
-        description: "Your Gemini API key appears to be invalid. Please check and try again.",
-        variant: "destructive",
-      });
+    } catch (error) {
+      console.error("API Key validation error:", error);
+      setIsApiKeyValid(false); // This line should be inside the catch block
     }
   };
 
+  useEffect(() => {
+    // Re-validate if currentKeyValue changes (e.g., user types in modal)
+    if (apiKeySource === null) { // Only validate user input if no key from env or local storage initially
+      checkApiKey(currentKeyValue);
+    }
+  }, [currentKeyValue, apiKeySource]);
+
   const handleSave = async () => {
     setApiKey(currentKeyValue);
-    await checkApiKey(currentKeyValue);
+    // The useEffect triggered by setApiKey will handle the validation
     onOpenChange(false);
   };
 
