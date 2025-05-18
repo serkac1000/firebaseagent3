@@ -63,6 +63,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, commitUrl: commit.html_url });
   } catch (error) {
     console.error('GitHub API Error:', error);
-    return NextResponse.json({ error: 'Failed to push to GitHub' }, { status: 500 });
+    let errorMessage = 'Failed to push to GitHub';
+    
+    if (error.status === 404) {
+      errorMessage = 'Repository not found. Check the URL and your access permissions.';
+    } else if (error.status === 401) {
+      errorMessage = 'Authentication failed. Verify your Personal Access Token.';
+    } else if (error.status === 422) {
+      errorMessage = 'Branch not found or invalid reference. Check if the branch exists.';
+    }
+    
+    return NextResponse.json({ error: errorMessage }, { status: error.status || 500 });
   }
 }
