@@ -21,8 +21,39 @@ Before you begin, ensure you have the following installed:
     If you haven't already, clone the repository to your local machine using Git. Open your command prompt (cmd) or PowerShell and run:
     ```bash
     git clone <repository_url>
+    cd <project_directory_name>
     ```
-    (Replace `<repository_url>` with the actual URL of the repository).
+
+2.  **Set up API Key:**
+    Before running the application, you need to set up your Google Gemini API key:
+    
+    a. Create a new file named `.env.local` in the project root:
+    ```env
+    GOOGLE_API_KEY=your_gemini_api_key_here
+    ```
+    
+    b. Replace `your_gemini_api_key_here` with your actual Gemini API key
+    
+3.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+
+4.  **Start Development Server:**
+    ```bash
+    npm run dev
+    ```
+    
+5.  **Access the Application:**
+    - Open your browser and navigate to: `http://0.0.0.0:9002`
+    - Test the API functionality using the interface
+    - Verify that the Gemini AI features work with your API key
+
+6.  **Testing API Integration:**
+    - The API key modal will appear if no key is detected
+    - Enter your Gemini API key when prompted
+    - Test the AI features through the interface
+    - Check the browser console for any API-related errors
 
 2.  **Navigate to the project directory:**
     Change your current directory to the newly cloned project folder:
