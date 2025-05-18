@@ -108,19 +108,50 @@ export function CodePilotLayout() {
       .catch(err => toast({ variant: "destructive", title: "Copy Failed", description: "Could not copy code to clipboard."}));
   };
   
-  const handlePushToGithub = () => {
-    // Placeholder for actual GitHub push logic
-    // This would typically involve a server action and a Git library
-    toast({
-      title: "GitHub Push (Conceptual)",
-      description: "This feature is a placeholder. Actual Git operations require server-side implementation.",
-    });
-    console.log({
-      githubRepoUrl,
-      githubBranch,
-      githubCommitMessage,
-      githubPat, // Be very careful with PATs
-    });
+  const handlePushToGithub = async () => {
+    if (!generatedCode || !githubPat || !githubRepoUrl) {
+      toast({ 
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please ensure you have generated code and provided repository details."
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/github', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          repoUrl: githubRepoUrl,
+          branch: githubBranch,
+          commitMessage: githubCommitMessage,
+          content: generatedCode,
+          pat: githubPat
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      toast({
+        title: "Success!",
+        description: "Code successfully pushed to GitHub."
+      });
+
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Push Failed",
+        description: error.message || "Could not push to GitHub. Please check your credentials."
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
 
