@@ -14,6 +14,17 @@ Before you begin, ensure you have the following installed:
 
 *   **Node.js**: Make sure you have Node.js installed, which includes npm (Node Package Manager). You can download it from [nodejs.org](https://nodejs.org/).
 *   **Git**: You'll need Git to clone the repository and manage versions. You can download it from [git-scm.com](https://git-scm.com/).
+*   **Python**: Required for building executable files. Install from [python.org](https://python.org).
+
+### Building Executable Files
+
+To create an executable file from your generated code:
+
+1. Save your generated code to `main.py`
+2. Use the "Build Windows EXE" workflow from the Workflows panel
+3. Find your executable in the `dist` directory
+
+The executable will be created as a standalone Windows application that can run without Python installed.
 
 ### Installation and Setup Steps
 
