@@ -257,36 +257,16 @@ export function CodePilotLayout() {
             <Card className="md:col-span-1 flex flex-col shadow-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2"><Github className="h-6 w-6 text-primary" />GitHub Integration</CardTitle>
-                <CardDescription>Push your generated code to a GitHub repository.</CardDescription>
+                <CardDescription>Import code from a GitHub repository.</CardDescription>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col space-y-4 overflow-y-auto p-6">
-                <div>
-                  <Label htmlFor="repo-url">Repository URL</Label>
-                  <Input id="repo-url" placeholder="https://github.com/user/repo.git" value={githubRepoUrl} onChange={(e) => setGithubRepoUrl(e.target.value)} className="mt-1" />
+                <div className="text-center p-4">
+                  <p className="mb-4">Import your existing code from GitHub to get started.</p>
+                  <Button onClick={() => window.location.href = "https://replit.com/new"} className="w-full py-3 text-base">
+                    Import from GitHub
+                    <Github className="ml-2 h-5 w-5" />
+                  </Button>
                 </div>
-                <div>
-                  <Label htmlFor="branch-name">Branch Name</Label>
-                  <Input id="branch-name" placeholder="main" value={githubBranch} onChange={(e) => setGithubBranch(e.target.value)} className="mt-1" />
-                </div>
-                <div>
-                  <Label htmlFor="commit-message">Commit Message</Label>
-                  <Input id="commit-message" placeholder="feat: Add generated code" value={githubCommitMessage} onChange={(e) => setGithubCommitMessage(e.target.value)} className="mt-1" />
-                </div>
-                <div>
-                  <Label htmlFor="pat">Personal Access Token (PAT)</Label>
-                  <Input id="pat" type="password" placeholder="Enter your GitHub PAT" value={githubPat} onChange={(e) => setGithubPat(e.target.value)} className="mt-1" />
-                   <Alert variant="destructive" className="mt-2">
-                    <AlertTriangle className="h-4 w-4" />
-                    <AlertTitle>Security Warning!</AlertTitle>
-                    <AlertDescription>
-                      Handling PATs directly in the client-side is insecure. This is a conceptual placeholder. For production, use secure backend authentication.
-                    </AlertDescription>
-                  </Alert>
-                </div>
-                <Button onClick={handlePushToGithub} className="w-full mt-auto py-3 text-base">
-                  Push to GitHub
-                  <Send className="ml-2 h-5 w-5" />
-                </Button>
               </CardContent>
             </Card>
           </div>
