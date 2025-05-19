@@ -16,6 +16,14 @@ Before you begin, ensure you have the following installed:
 *   **Git**: You'll need Git to clone the repository and manage versions. You can download it from [git-scm.com](https://git-scm.com/).
 *   **Python**: Required for building executable files. Install from [python.org](https://python.org).
 
+### Windows Quick Start
+
+Two batch files are provided for easy setup and running:
+
+1. Double-click `install.bat` to install all dependencies
+2. Double-click `start-server.bat` to start the development server
+3. Access the application at `http://0.0.0.0:9002`
+
 ### Building Executable Files
 
 To create an executable file from your generated code:
