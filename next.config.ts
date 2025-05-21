@@ -1,7 +1,7 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -18,12 +18,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
-module.exports = {
-  // Other configurations...
   dev: {
     allowedDevOrigins: [
-      'https://<your-replit-subdomain>.replit.dev',
+      'https://2e01e1e9-6a13-44c7-86f1-5856751d48bc-00-3qd7scyhu3dnq.sisko.replit.dev',
       'http://localhost:9002',
     ],
   },
