@@ -1,9 +1,16 @@
 ```bash
   #!/bin/bash
 
-  # Check if the current directory is a Git repository
+  # Navigate to the repository directory
+  REPO_PATH="/e/PRODUCTION/firebaseagent3-main"
+  if ! cd "$REPO_PATH"; then
+      echo "Error: Directory $REPO_PATH does not exist. Please check the path and try again."
+      exit 1
+  fi
+
+  # Check if the directory is a Git repository
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-      echo "Error: Current directory is not a Git repository. Initialize it with 'git init' or clone the correct repository."
+      echo "Error: $REPO_PATH is not a Git repository. Initialize it with 'git init' or clone the correct repository."
       exit 1
   fi
 
