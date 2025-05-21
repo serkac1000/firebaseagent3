@@ -28,7 +28,9 @@ const nextConfig = {
   },
   allowedDevOrigins: [
     'https://*.replit.dev',
-    'http://0.0.0.0:9002'
+    'http://*.replit.dev',
+    'http://0.0.0.0:9002',
+    'http://localhost:9002',
   ]
 };
 
