@@ -1,5 +1,5 @@
 
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -18,18 +18,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  dev: {
-    allowedDevOrigins: [
-      'https://2e01e1e9-6a13-44c7-86f1-5856751d48bc-00-3qd7scyhu3dnq.sisko.replit.dev',
-      'http://localhost:9002',
-    ],
-  },
-};
-/** @type {import('next').NextConfig} */
-const nextConfig = {
   reactStrictMode: true,
-  // Add other valid options here
+  allowedDevOrigins: [
+    'https://*.replit.dev',
+    'http://0.0.0.0:9002'
+  ]
 };
 
-module.exports = nextConfig;
 export default nextConfig;
