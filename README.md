@@ -14,6 +14,28 @@ Before you begin, ensure you have the following installed:
 
 *   **Node.js**: Make sure you have Node.js installed, which includes npm (Node Package Manager). You can download it from [nodejs.org](https://nodejs.org/).
 *   **Git**: You'll need Git to clone the repository and manage versions. You can download it from [git-scm.com](https://git-scm.com/).
+<<<<<<< HEAD
+=======
+*   **Python**: Required for building executable files. Install from [python.org](https://python.org).
+
+### Windows Quick Start
+
+Two batch files are provided for easy setup and running:
+
+1. Double-click `install.bat` to install all dependencies
+2. Double-click `start-server.bat` to start the development server
+3. Access the application at `http://0.0.0.0:9002`
+
+### Building Executable Files
+
+To create an executable file from your generated code:
+
+1. Save your generated code to `main.py`
+2. Use the "Build Windows EXE" workflow from the Workflows panel
+3. Find your executable in the `dist` directory
+
+The executable will be created as a standalone Windows application that can run without Python installed.
+>>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
 
 ### Installation and Setup Steps
 
@@ -21,8 +43,44 @@ Before you begin, ensure you have the following installed:
     If you haven't already, clone the repository to your local machine using Git. Open your command prompt (cmd) or PowerShell and run:
     ```bash
     git clone <repository_url>
+<<<<<<< HEAD
     ```
     (Replace `<repository_url>` with the actual URL of the repository).
+=======
+    cd <project_directory_name>
+    ```
+
+2.  **Set up API Key:**
+    Before running the application, you need to set up your Google Gemini API key:
+    
+    a. Create a new file named `.env.local` in the project root:
+    ```env
+    GOOGLE_API_KEY=your_gemini_api_key_here
+    ```
+    
+    b. Replace `your_gemini_api_key_here` with your actual Gemini API key
+    
+3.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+
+4.  **Start Development Server:**
+    ```bash
+    npm run dev
+    ```
+    
+5.  **Access the Application:**
+    - Open your browser and navigate to: `http://0.0.0.0:9002`
+    - Test the API functionality using the interface
+    - Verify that the Gemini AI features work with your API key
+
+6.  **Testing API Integration:**
+    - The API key modal will appear if no key is detected
+    - Enter your Gemini API key when prompted
+    - Test the AI features through the interface
+    - Check the browser console for any API-related errors
+>>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
 
 2.  **Navigate to the project directory:**
     Change your current directory to the newly cloned project folder:

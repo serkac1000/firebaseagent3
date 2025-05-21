@@ -23,3 +23,23 @@ args = "npm install"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
+<<<<<<< HEAD
+=======
+
+[[workflows.workflow]]
+name = "Build Windows EXE"
+author = 42845952
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m pip install pyinstaller"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pyinstaller --onefile --windowed main.py"
+
+[[ports]]
+localPort = 9002
+externalPort = 80
+>>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0

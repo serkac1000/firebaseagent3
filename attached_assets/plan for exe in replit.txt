@@ -1,0 +1,18 @@
+1.cd /c/Users/HOT
+2.$ mkdir timer-python
+3.cd timer-python
+4.touch timer.py
+5.enter code from Codepilot output
+
+
+ 
+
+ 
+
+6.install pyinstaller
+/c/Users/HOT/AppData/Local/Programs/Python/Python311/python -m pip install pyinstaller
+ 
+
+
+7.build exe
+/c/Users/HOT/AppData/Local/Programs/Python/Python311/Scripts/pyinstaller --onefile --windowed timer.py

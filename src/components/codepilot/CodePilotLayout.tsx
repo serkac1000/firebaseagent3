@@ -108,6 +108,7 @@ export function CodePilotLayout() {
       .catch(err => toast({ variant: "destructive", title: "Copy Failed", description: "Could not copy code to clipboard."}));
   };
   
+<<<<<<< HEAD
   const handlePushToGithub = () => {
     // Placeholder for actual GitHub push logic
     // This would typically involve a server action and a Git library
@@ -121,6 +122,52 @@ export function CodePilotLayout() {
       githubCommitMessage,
       githubPat, // Be very careful with PATs
     });
+=======
+  const handlePushToGithub = async () => {
+    if (!generatedCode || !githubPat || !githubRepoUrl) {
+      toast({ 
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please ensure you have generated code and provided repository details."
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/github', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          repoUrl: githubRepoUrl,
+          branch: githubBranch,
+          commitMessage: githubCommitMessage,
+          content: generatedCode,
+          pat: githubPat
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      toast({
+        title: "Success!",
+        description: "Code successfully pushed to GitHub."
+      });
+
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Push Failed",
+        description: error.message || "Could not push to GitHub. Please check your credentials."
+      });
+    } finally {
+      setIsLoading(false);
+    }
+>>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
   };
 
 
@@ -226,6 +273,7 @@ export function CodePilotLayout() {
             <Card className="md:col-span-1 flex flex-col shadow-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2"><Github className="h-6 w-6 text-primary" />GitHub Integration</CardTitle>
+<<<<<<< HEAD
                 <CardDescription>Push your generated code to a GitHub repository.</CardDescription>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col space-y-4 overflow-y-auto p-6">
@@ -256,6 +304,18 @@ export function CodePilotLayout() {
                   Push to GitHub
                   <Send className="ml-2 h-5 w-5" />
                 </Button>
+=======
+                <CardDescription>Import code from a GitHub repository.</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1 flex flex-col space-y-4 overflow-y-auto p-6">
+                <div className="text-center p-4">
+                  <p className="mb-4">Import your existing code from GitHub to get started.</p>
+                  <Button onClick={() => window.location.href = "https://replit.com/new"} className="w-full py-3 text-base">
+                    Import from GitHub
+                    <Github className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+>>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
               </CardContent>
             </Card>
           </div>
