@@ -1,4 +1,4 @@
-// src/components/codepilot/CodePilotLayout.tsx
+
 "use client";
 
 import React, { useState, useCallback, useEffect } from "react";
@@ -36,7 +36,7 @@ export function CodePilotLayout() {
   const [githubRepoUrl, setGithubRepoUrl] = useState("");
   const [githubBranch, setGithubBranch] = useState("main");
   const [githubCommitMessage, setGithubCommitMessage] = useState("feat: Add generated code");
-  const [githubPat, setGithubPat] = useState(""); // Caution: PAT handling
+  const [githubPat, setGithubPat] = useState("");
 
   const { toast } = useToast();
 
@@ -62,7 +62,6 @@ export function CodePilotLayout() {
         setUploadedFileNames([]);
       } finally {
         setIsLoading(false);
-         // Clear the file input value so the same file can be re-uploaded if needed
         if (event.target) {
           event.target.value = "";
         }
@@ -107,8 +106,8 @@ export function CodePilotLayout() {
       .then(() => toast({ title: "Copied to Clipboard!"}))
       .catch(err => toast({ variant: "destructive", title: "Copy Failed", description: "Could not copy code to clipboard."}));
   };
-  
-const handlePushToGithub = async () => {
+
+  const handlePushToGithub = async () => {
     if (!generatedCode || !githubPat || !githubRepoUrl) {
       toast({ 
         variant: "destructive",
@@ -147,14 +146,12 @@ const handlePushToGithub = async () => {
       toast({
         variant: "destructive",
         title: "Push Failed",
-        description: error.message || "Could not push to GitHub. Please check your credentials."
+        description: error instanceof Error ? error.message : "Could not push to GitHub. Please check your credentials."
       });
     } finally {
       setIsLoading(false);
     }
->>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
   };
-
 
   return (
     <TooltipProvider>
@@ -258,28 +255,63 @@ const handlePushToGithub = async () => {
             <Card className="md:col-span-1 flex flex-col shadow-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2"><Github className="h-6 w-6 text-primary" />GitHub Integration</CardTitle>
-<<<<<<< HEAD
-                <CardDescription>Import code from a GitHub repository.</CardDescription>
+                <CardDescription>Push generated code to GitHub repository.</CardDescription>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col space-y-4 overflow-y-auto p-6">
-                <div className="text-center p-4">
-                  <p className="mb-4">Import your existing code from GitHub to get started.</p>
-                  <Button onClick={() => window.location.href = "https://replit.com/new"} className="w-full py-3 text-base">
-                    Import from GitHub
-                    <Github className="ml-2 h-5 w-5" />
-                  </Button>
+              <CardContent className="flex-1 flex flex-col space-y-4 p-6">
+                <div>
+                  <Label htmlFor="github-repo" className="text-base font-medium">Repository URL</Label>
+                  <Input
+                    id="github-repo"
+                    placeholder="e.g., https://github.com/username/repo"
+                    value={githubRepoUrl}
+                    onChange={(e) => setGithubRepoUrl(e.target.value)}
+                    className="mt-1"
+                    disabled={isLoading}
+                  />
                 </div>
-                <CardDescription>Import code from a GitHub repository.</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col space-y-4 overflow-y-auto p-6">
-                <div className="text-center p-4">
-                  <p className="mb-4">Import your existing code from GitHub to get started.</p>
-                  <Button onClick={() => window.location.href = "https://replit.com/new"} className="w-full py-3 text-base">
-                    Import from GitHub
-                    <Github className="ml-2 h-5 w-5" />
-                  </Button>
+                <div>
+                  <Label htmlFor="github-branch" className="text-base font-medium">Branch</Label>
+                  <Input
+                    id="github-branch"
+                    placeholder="e.g., main"
+                    value={githubBranch}
+                    onChange={(e) => setGithubBranch(e.target.value)}
+                    className="mt-1"
+                    disabled={isLoading}
+                  />
                 </div>
->>>>>>> 72bfa3c80c4d1dc88aba354e10eb8dbe1d8207e0
+                <div>
+                  <Label htmlFor="github-commit" className="text-base font-medium">Commit Message</Label>
+                  <Input
+                    id="github-commit"
+                    placeholder="Enter commit message"
+                    value={githubCommitMessage}
+                    onChange={(e) => setGithubCommitMessage(e.target.value)}
+                    className="mt-1"
+                    disabled={isLoading}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="github-pat" className="text-base font-medium">Personal Access Token</Label>
+                  <Input
+                    id="github-pat"
+                    type="password"
+                    placeholder="GitHub Personal Access Token"
+                    value={githubPat}
+                    onChange={(e) => setGithubPat(e.target.value)}
+                    className="mt-1"
+                    disabled={isLoading}
+                  />
+                </div>
+                <Button 
+                  onClick={handlePushToGithub} 
+                  disabled={isLoading || !githubRepoUrl || !githubPat || !generatedCode}
+                  className="w-full mt-auto py-3 text-base"
+                >
+                  {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+                  Push to GitHub
+                  {!isLoading && <Github className="ml-2 h-5 w-5" />}
+                </Button>
               </CardContent>
             </Card>
           </div>
