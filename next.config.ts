@@ -19,5 +19,14 @@ const nextConfig: NextConfig = {
     ],
   },
 };
+module.exports = {
+  // Other configurations...
+  dev: {
+    allowedDevOrigins: [
+      'https://<your-replit-subdomain>.replit.dev',
+      'http://localhost:9002',
+    ],
+  },
+};
 
 export default nextConfig;
