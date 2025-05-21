@@ -1,7 +1,6 @@
 
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -19,6 +18,14 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://0.0.0.0:9002/api/:path*',
+      },
+    ];
+  },
   allowedDevOrigins: [
     'https://*.replit.dev',
     'http://0.0.0.0:9002'
