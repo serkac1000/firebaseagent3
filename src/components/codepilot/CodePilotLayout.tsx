@@ -177,15 +177,32 @@ export function CodePilotLayout() {
               </CardHeader>
               <CardContent className="flex-1 flex flex-col space-y-6 overflow-y-auto p-6">
                 <div>
-                  <Label htmlFor="prompt" className="text-base font-medium">Your Prompt</Label>
-                  <Textarea
-                    id="prompt"
-                    placeholder="Describe the code you want to generate..."
-                    value={promptText}
-                    onChange={(e) => setPromptText(e.target.value)}
-                    className="min-h-[150px] mt-1 text-sm"
-                    disabled={isLoading}
-                  />
+                  <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="github-import" className="text-base font-medium">GitHub Repository URL</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="github-import"
+                        placeholder="https://github.com/username/repo"
+                        className="flex-1"
+                      />
+                      <Button onClick={() => toast({ title: "Importing repository...", description: "This feature is coming soon!" })}>
+                        Import
+                      </Button>
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="prompt" className="text-base font-medium">Your Prompt</Label>
+                    <Textarea
+                      id="prompt"
+                      placeholder="Describe the code you want to generate..."
+                      value={promptText}
+                      onChange={(e) => setPromptText(e.target.value)}
+                      className="min-h-[150px] mt-1 text-sm"
+                      disabled={isLoading}
+                    />
+                  </div>
+</div>
                 </div>
 
                 <div>
