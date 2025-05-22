@@ -40,6 +40,10 @@ const nextConfig: NextConfig = {
       fs: false,
       path: false,
     };
+    config.module.rules.push({
+      test: /\.hbs$/,
+      loader: 'handlebars-loader'
+    });
     return config;
   },
 };
