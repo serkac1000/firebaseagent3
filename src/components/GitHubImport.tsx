@@ -1,3 +1,4 @@
+"use client";
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -22,8 +23,10 @@ export default function GitHubImport() {
     try {
       const response = await fetch('/api/github/import', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ repoUrl })
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ repoUrl }),
       });
 
       const data = await response.json();
@@ -33,14 +36,14 @@ export default function GitHubImport() {
       }
 
       toast({
-        title: "Success",
-        description: "Repository imported successfully"
+        title: 'Success',
+        description: 'Repository imported successfully',
       });
       setRepoUrl('');
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Error",
+        title: 'Error',
         description: error.message
       });
     } finally {
