@@ -1,7 +1,7 @@
-import type {NextConfig} from 'next';
+
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -17,6 +17,29 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  // Add cross-origin configuration
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
+  },
+  // Configure for Windows compatibility
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+    };
+    return config;
   },
 };
 
