@@ -1,11 +1,12 @@
 modules = ["nodejs-20", "web", "nix"]
-run = "node index.js"
+run = "npm run dev"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "node index.js"]
+run = ["sh", "-c", "npm start"]
+build = ["sh", "-c", "npm run build"]
 
 [workflows]
 runButton = "Development"
@@ -22,7 +23,3 @@ args = "npm install"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-
-[[ports]]
-localPort = 9002
-externalPort = 80
