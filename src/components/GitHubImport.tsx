@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 
-export function GitHubImport() {
+export default function GitHubImport() {
   const [repoUrl, setRepoUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +38,7 @@ export function GitHubImport() {
         title: "Success",
         description: "Repository imported successfully",
       });
+      setRepoUrl('');
     } catch (error) {
       toast({
         title: "Error",
