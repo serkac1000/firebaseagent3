@@ -41,6 +41,15 @@ export function PyInstallerBuilder() {
       const data = await response.json();
 
       if (response.ok) {
+        // Validate that the generated code is actually Python
+        if (data.pythonCode.includes('import React') || 
+            data.pythonCode.includes('useState') ||
+            data.pythonCode.includes('jsx') ||
+            data.pythonCode.includes('from react')) {
+          setError('Error: System generated JavaScript/React code instead of Python. Please try again with a clearer Python/mobile app request.');
+          return;
+        }
+        
         setGeneratedCode(data.pythonCode);
         // Create a virtual file from generated code
         const blob = new Blob([data.pythonCode], { type: 'text/python' });
@@ -149,7 +158,7 @@ export function PyInstallerBuilder() {
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Example: Create a simple calculator app with basic math operations, or Create a weather app that shows current temperature"
+                placeholder="Example: Create a Python mobile calculator app using Kivy with buttons for basic math operations, or Create a Python weather app using Kivy that displays temperature"
                 className="w-full p-3 border rounded-md min-h-[100px] resize-vertical"
               />
             </div>
