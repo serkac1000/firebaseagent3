@@ -73,7 +73,10 @@ export function PyInstallerBuilder() {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Python to Executable Converter</CardTitle>
+        <CardTitle>Python to Executable & Android Project Creator</CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Convert Python files to executables and generate Android Studio project structure
+        </p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
@@ -118,7 +121,16 @@ export function PyInstallerBuilder() {
             <AlertDescription>
               <div className="space-y-2">
                 <p className="font-semibold text-green-600">✅ {result.message}</p>
-                <p className="text-sm">Output: {result.outputPath}</p>
+                <p className="text-sm">Executable: {result.outputPath}</p>
+                {result.androidProjectPath && (
+                  <div className="mt-2 p-2 bg-blue-50 rounded">
+                    <p className="text-sm font-medium text-blue-800">📱 Android Studio Project Created</p>
+                    <p className="text-xs text-blue-600">Path: {result.androidProjectPath}</p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      Ready for Kivy/Buildozer compilation to APK
+                    </p>
+                  </div>
+                )}
                 {result.logs && (
                   <details className="text-xs">
                     <summary>Build Logs</summary>
