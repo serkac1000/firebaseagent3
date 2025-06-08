@@ -1,90 +1,61 @@
-# Firebase Studio - CodePilot
-
-This is a NextJS starter, named CodePilot, in Firebase Studio.
-
-To get started, take a look at `src/app/page.tsx`.
-
-## Getting Started with CodePilot on Windows
-
-These steps will guide you through setting up and running the CodePilot application on your Windows machine after you have cloned the repository.
-
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-*   **Node.js**: Make sure you have Node.js installed, which includes npm (Node Package Manager). You can download it from [nodejs.org](https://nodejs.org/).
-*   **Git**: You'll need Git to clone the repository and manage versions. You can download it from [git-scm.com](https://git-scm.com/).
-
-### Installation and Setup Steps
-
-1.  **Clone the repository:**
-    If you haven't already, clone the repository to your local machine using Git. Open your command prompt (cmd) or PowerShell and run:
-    ```bash
-    git clone <repository_url>
-    ```
-    (Replace `<repository_url>` with the actual URL of the repository).
-
-2.  **Navigate to the project directory:**
-    Change your current directory to the newly cloned project folder:
-    ```bash
-    cd <project_directory_name>
-    ```
-    (Replace `<project_directory_name>` with the name of the folder created by `git clone`, usually the repository name).
-
-3.  **Install dependencies:**
-    Install the necessary project dependencies using npm:
-    ```bash
-    npm install
-    ```
-    This command will download all the packages listed in the `package.json` file.
-
-4.  **Set up Environment Variables (Important for AI Features):**
-    The application uses an API key for Gemini AI services.
-    *   Create a new file named `.env.local` in the root of your project directory (the same level as `package.json`).
-    *   Add your Google Gemini API key to this file:
-        ```env
-        GOOGLE_API_KEY=your_actual_gemini_api_key_here
-        # You might also want to set NEXT_PUBLIC_GOOGLE_API_KEY if any client-side Genkit usage is planned
-        # NEXT_PUBLIC_GOOGLE_API_KEY=your_actual_gemini_api_key_here
-        ```
-    *   Replace `your_actual_gemini_api_key_here` with your valid API key.
-    *   **Note:** The `ApiKeyModal` in the app mentions that the `GOOGLE_API_KEY` environment variable is crucial for server-side AI operations.
-
-5.  **Run the development server:**
-    Start the Next.js development server:
-    ```bash
-    npm run dev
-    ```
-    This will typically start the application on `http://localhost:9002` (as configured in your `package.json`). Open this URL in your web browser to see CodePilot running.
-
-### Other Useful Commands
-
-*   **Run Genkit development server (for AI flows):**
-    ```bash
-    npm run genkit:dev
-    ```
-*   **Build for production:**
-    ```bash
-    npm run build
-    ```
-*   **Start production server:**
-    ```bash
-    npm run start
-    ```
-*   **Lint code:**
-    ```bash
-    npm run lint
-    ```
-*   **Type check:**
-    ```bash
-    npm run typecheck
-    ```
 
 # Firebase Studio - CodePilot
+
+A comprehensive AI-powered development platform with GitHub integration, PyInstaller Builder, and Android app generation capabilities.
+
+## Features
+
+- 🤖 AI-powered code generation using Google Gemini
+- 🐙 GitHub repository import/export with @octokit/rest
+- 📦 PyInstaller Builder for creating Windows executables
+- 📱 Android Studio project generation
+- 🔧 Complete development environment
+- 🎨 Modern UI with Radix UI components
+
+## Installation and Setup
+
+### 1. Clone the repository
+```bash
+git clone <repository_url>
+cd <project_directory>
+```
+
+### 2. Install dependencies (including @octokit/rest)
+```bash
+npm install
+```
+
+### 3. Environment Variables Setup
+Create a `.env.local` file in the root directory:
+```env
+GOOGLE_API_KEY=your_actual_gemini_api_key_here
+GITHUB_PAT=your_github_personal_access_token_here
+```
+
+### 4. Start the development server
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:9002`
+
+## GitHub Integration
+
+This project includes full GitHub integration using `@octokit/rest`:
+
+- **Import repositories**: Fetch code from any public GitHub repository
+- **Export to GitHub**: Push your generated code to GitHub repositories
+- **API integration**: Complete GitHub API support with authentication
+
+## PyInstaller Builder
+
+Generate Windows executables from Python code:
+1. Upload Python files through the web interface
+2. Configure build options
+3. Download the generated .exe file
+4. Optionally generate Android project structure
 
 ## Android Studio Project Creation & APK Compilation
-
-This application includes a PyInstaller Builder that not only creates Windows executables but also generates complete Android Studio project structure for mobile app development.
 
 ### Steps to Create and Compile Android APK:
 
@@ -178,4 +149,78 @@ To customize your Android app:
 - At least 8GB RAM recommended
 - 10GB+ free disk space
 
-# firebaseagent3
+## Available Scripts
+
+- `npm run dev` - Start development server on port 9002
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run typecheck` - Run TypeScript type checking
+- `npm run genkit:dev` - Start Genkit development server for AI flows
+
+## Dependencies
+
+### Main Dependencies
+- **Next.js 15.2.3** - React framework
+- **@octokit/rest** - GitHub API integration
+- **@genkit-ai/googleai** - Google Gemini AI integration
+- **Radix UI** - Modern UI components
+- **Tailwind CSS** - Utility-first CSS framework
+- **Firebase** - Backend services
+- **React Hook Form** - Form management
+- **Zod** - Schema validation
+
+### Key Features by Component
+- **GitHubImport.tsx**: Repository import functionality
+- **PyInstallerBuilder.tsx**: Executable generation
+- **CodePilotLayout.tsx**: Main application layout with GitHub push capabilities
+- **API Routes**: GitHub integration and build services
+
+## GitHub Upload
+
+To upload all files to GitHub:
+
+```bash
+# Make the upload script executable
+chmod +x update_to_github.sh
+
+# Run the upload script
+./update_to_github.sh
+```
+
+This will:
+1. Install all dependencies including @octokit/rest
+2. Add all project files to Git
+3. Create a comprehensive commit
+4. Push to your configured GitHub repository
+
+## Project Structure
+
+```
+├── src/
+│   ├── app/                 # Next.js app directory
+│   │   ├── api/            # API routes
+│   │   └── page.tsx        # Main page
+│   ├── components/         # React components
+│   │   ├── ui/            # UI components
+│   │   ├── GitHubImport.tsx
+│   │   └── PyInstallerBuilder.tsx
+│   └── lib/               # Utilities
+├── test-files/            # Sample test files
+├── package.json           # Dependencies including @octokit/rest
+└── README.md              # This file
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Install dependencies: `npm install`
+5. Test your changes: `npm run dev`
+6. Commit and push to your branch
+7. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

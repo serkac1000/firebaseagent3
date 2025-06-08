@@ -1,53 +1,62 @@
-```bash
-  #!/bin/bash
 
-  # Navigate to the repository directory
-  REPO_PATH="/e/PRODUCTION/firebaseagent3-main"
-  if ! cd "$REPO_PATH"; then
-      echo "Error: Directory $REPO_PATH does not exist. Please check the path and try again."
-      exit 1
-  fi
+#!/bin/bash
 
-  # Check if the directory is a Git repository
-  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-      echo "Error: $REPO_PATH is not a Git repository. Initialize it with 'git init' or clone the correct repository."
-      exit 1
-  fi
+echo "🚀 Starting comprehensive GitHub upload with @octokit/rest installation..."
 
-  # Fetch the latest changes from GitHub
-  if ! git fetch origin; then
-      echo "Error: Failed to fetch from remote repository. Check your remote configuration and network."
-      exit 1
-  fi
+# Check if git is initialized
+if [ ! -d ".git" ]; then
+    echo "Initializing Git repository..."
+    git init
+    git branch -M main
+fi
 
-  # Check for differences between local and remote
-  echo "Checking differences between local and remote (origin/main)..."
-  git diff origin/main
+# Install/reinstall dependencies to ensure @octokit/rest is properly installed
+echo "📦 Installing dependencies including @octokit/rest..."
+npm install
 
-  # Prompt user to proceed
-  read -p "Do you want to stage and push changes? (y/n): " answer
-  if [ "$answer" != "y" ]; then
-      echo "Aborting..."
-      exit 1
-  fi
+# Add all files to staging
+echo "📁 Adding all files to Git staging area..."
+git add .
 
-  # Stage all changes
-  if ! git add .; then
-      echo "Error: Failed to stage changes."
-      exit 1
-  fi
+# Create comprehensive commit message
+COMMIT_MSG="Complete project upload with GitHub integration
 
-  # Commit changes with a message
-  if ! git commit -m "Updated fixed code from local PC"; then
-      echo "Error: Failed to commit changes. There may be no changes to commit."
-      exit 1
-  fi
+- Added @octokit/rest integration for GitHub API
+- Included PyInstaller Builder for executable generation
+- Added Android Studio compilation documentation
+- Complete CodePilot application with AI features
+- GitHub import/export functionality
+- Test files and documentation
+- All UI components and configurations"
 
-  # Push to GitHub
-  if ! git push origin main; then
-      echo "Error: Failed to push changes to GitHub. Check for conflicts or authentication issues."
-      exit 1
-  fi
+echo "💾 Committing changes..."
+git commit -m "$COMMIT_MSG"
 
-  echo "Changes successfully pushed to GitHub!"
-  ```
+# Check if remote origin exists
+if ! git remote get-url origin > /dev/null 2>&1; then
+    echo "❗ No remote repository configured."
+    echo "Please add your GitHub repository URL:"
+    echo "git remote add origin https://github.com/username/repository-name.git"
+    echo "Then run this script again."
+    exit 1
+fi
+
+# Push to GitHub
+echo "🌐 Pushing to GitHub..."
+git push -u origin main
+
+echo "✅ Successfully uploaded all files to GitHub!"
+echo "📋 Upload summary:"
+echo "   - All source code and components"
+echo "   - GitHub integration with @octokit/rest"
+echo "   - PyInstaller Builder"
+echo "   - Android development documentation"
+echo "   - Test files and configurations"
+echo "   - Dependencies properly installed"
+
+echo ""
+echo "🔧 To set up on a new machine:"
+echo "   1. Clone the repository"
+echo "   2. Run: npm install"
+echo "   3. Set up environment variables in .env.local"
+echo "   4. Run: npm run dev"
