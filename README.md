@@ -80,4 +80,102 @@ Before you begin, ensure you have the following installed:
     npm run typecheck
     ```
 
+# Firebase Studio - CodePilot
+
+## Android Studio Project Creation & APK Compilation
+
+This application includes a PyInstaller Builder that not only creates Windows executables but also generates complete Android Studio project structure for mobile app development.
+
+### Steps to Create and Compile Android APK:
+
+#### 1. Generate Android Project Structure
+1. Navigate to the PyInstaller Builder in the web interface
+2. Upload your Python (.py) file
+3. Click "Build Executable" - this creates both the Windows executable and Android project structure
+4. The system will generate:
+   - Complete Android Studio project in `android_project/` directory
+   - `buildozer.spec` configuration file for Kivy/Buildozer compilation
+   - `main.py` template adapted for Kivy mobile development
+   - Android manifest files and project structure
+
+#### 2. Prepare for Android Development
+
+**Option A: Using Buildozer (Recommended for Python/Kivy apps)**
+```bash
+# Install required dependencies
+pip install buildozer
+pip install kivy
+pip install cython
+
+# Navigate to the generated android project directory
+cd temp/[timestamp]/android_project/
+
+# Initialize and build APK
+buildozer android debug
+```
+
+**Option B: Using Android Studio (For native Android development)**
+1. Download and install Android Studio
+2. Install Android SDK (API level 30 recommended)
+3. Install Android NDK (version 25b recommended)
+4. Open the generated `android_project` folder in Android Studio
+5. Sync Gradle files
+6. Build APK via Build → Build Bundle(s)/APK(s) → Build APK(s)
+
+#### 3. Project Structure Generated
+```
+android_project/
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/example/[projectname]/
+│   │   ├── res/
+│   │   │   ├── values/strings.xml
+│   │   │   └── layout/
+│   │   ├── assets/
+│   │   └── AndroidManifest.xml
+│   └── build.gradle
+├── buildozer.spec
+├── main.py (Kivy template)
+└── README.md
+```
+
+#### 4. Configuration Files Included
+
+**buildozer.spec** - Pre-configured for:
+- Target Android API 30
+- Minimum API 21
+- Required permissions (INTERNET)
+- Python 3 + Kivy requirements
+
+**AndroidManifest.xml** - Includes:
+- App permissions
+- Activity declarations
+- Launch configurations
+
+#### 5. Testing Your APK
+1. **Debug APK**: `buildozer android debug` creates an unsigned APK for testing
+2. **Release APK**: `buildozer android release` creates a signed APK for distribution
+3. **Install on device**: `adb install bin/[appname]-debug.apk`
+
+#### 6. Troubleshooting Common Issues
+- **NDK not found**: Ensure Android NDK is installed via Android Studio SDK Manager
+- **Build tools missing**: Install Android SDK Build-Tools via SDK Manager
+- **Java version issues**: Use Java 8 or 11 for compatibility
+- **Gradle sync failed**: Check network connectivity and proxy settings
+
+#### 7. Advanced Configuration
+To customize your Android app:
+1. Edit `buildozer.spec` for app metadata, permissions, and requirements
+2. Modify `main.py` with your application logic using Kivy framework
+3. Add resources to `app/src/main/assets/` directory
+4. Update `AndroidManifest.xml` for additional permissions or features
+
+### Prerequisites for Android Development
+- Python 3.7+
+- Android Studio with SDK Tools
+- Android NDK (for native compilation)
+- Java 8 or 11
+- At least 8GB RAM recommended
+- 10GB+ free disk space
+
 # firebaseagent3
