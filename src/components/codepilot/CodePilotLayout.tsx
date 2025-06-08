@@ -107,31 +107,36 @@ export function CodePilotLayout() {
   };
 
   const handlePushToGithub = async () => {
-    if (!generatedCode || !githubPat || !githubRepoUrl) {
-      toast({ 
-        variant: "destructive",
+    // Use GITHUB_TOKEN from environment if available, otherwise use user input
+    const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN || githubPat;
+
+    if (!githubRepoUrl || !token || !generatedCode) {
+      toast({
         title: "Missing Information",
-        description: "Please ensure you have generated code and provided repository details."
+        description: "Please fill in all required fields or set GITHUB_TOKEN environment variable.",
+        variant: "destructive"
       });
       return;
     }
 
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await fetch('/api/github', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           repoUrl: githubRepoUrl,
-          branch: githubBranch,
-          commitMessage: githubCommitMessage,
+          branch: githubBranch || 'main',
+          commitMessage: githubCommitMessage || 'feat: Add generated code',
           content: generatedCode,
-          pat: githubPat
-        })
+          pat: token
+        }),
       });
 
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
@@ -230,7 +235,7 @@ export function CodePilotLayout() {
                     </div>
                   )}
                 </div>
-                
+
                 <Button onClick={handleGenerateCode} disabled={isLoading || !promptText.trim()} className="w-full mt-auto py-3 text-base">
                   {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                   {isLoading ? "Generating..." : "Generate Code"}

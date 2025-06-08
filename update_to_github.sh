@@ -43,6 +43,12 @@ fi
 
 # Push to GitHub
 echo "🌐 Pushing to GitHub..."
+if [ ! -z "$GITHUB_TOKEN" ]; then
+    echo "Using GITHUB_TOKEN for authentication..."
+    # Configure Git to use the token
+    git config --global credential.helper store
+    echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > ~/.git-credentials
+fi
 git push -u origin main
 
 echo "✅ Successfully uploaded all files to GitHub!"
