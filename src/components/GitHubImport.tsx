@@ -9,6 +9,7 @@ import { toast } from '@/hooks/use-toast';
 export default function GitHubImport() {
   const [repoUrl, setRepoUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [testMode, setTestMode] = useState(false);
 
   const handleImport = async () => {
     if (!repoUrl) {
@@ -50,17 +51,39 @@ export default function GitHubImport() {
     }
   };
 
+  const loadTestRepo = () => {
+    setRepoUrl('https://github.com/octocat/Hello-World');
+    setTestMode(true);
+  };
+
   return (
-    <div className="flex gap-2">
-      <Input
-        type="text"
-        placeholder="Enter GitHub repository URL"
-        value={repoUrl}
-        onChange={(e) => setRepoUrl(e.target.value)}
-      />
-      <Button onClick={handleImport} disabled={isLoading}>
-        {isLoading ? 'Importing...' : 'Import'}
-      </Button>
+    <div className="space-y-2">
+      <div className="flex gap-2">
+        <Input
+          type="text"
+          placeholder="Enter GitHub repository URL"
+          value={repoUrl}
+          onChange={(e) => setRepoUrl(e.target.value)}
+        />
+        <Button onClick={handleImport} disabled={isLoading}>
+          {isLoading ? 'Importing...' : 'Import'}
+        </Button>
+      </div>
+      <div className="flex gap-2">
+        <Button 
+          variant="outline" 
+          onClick={loadTestRepo}
+          disabled={isLoading}
+          size="sm"
+        >
+          Load Test Repository
+        </Button>
+        {testMode && (
+          <span className="text-sm text-muted-foreground flex items-center">
+            🧪 Test mode active
+          </span>
+        )}
+      </div>
     </div>
   );
 }

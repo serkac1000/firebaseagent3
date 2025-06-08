@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Integration Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .feature {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007acc;
+            background-color: #f8f9fa;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub Integration Test</h1>
+        <p>This page tests the GitHub integration functionality of CodePilot.</p>
+        
+        <div class="feature">
+            <h3>🚀 Code Generation</h3>
+            <p>Generate Python code using AI prompts and push directly to GitHub.</p>
+        </div>
+        
+        <div class="feature">
+            <h3>📁 Repository Import</h3>
+            <p>Import existing GitHub repositories for code analysis and modification.</p>
+        </div>
+        
+        <div class="feature">
+            <h3>🔧 PyInstaller Integration</h3>
+            <p>Build executable files and Android projects from Python code.</p>
+        </div>
+        
+        <button onclick="testFunction()">Test GitHub Integration</button>
+        
+        <script>
+            function testFunction() {
+                alert('GitHub integration test successful!');
+                console.log('Test executed at:', new Date().toISOString());
+            }
+            
+            // Log when page loads
+            window.onload = function() {
+                console.log('GitHub test page loaded successfully');
+            };
+        </script>
+    </div>
+</body>
+</html>
