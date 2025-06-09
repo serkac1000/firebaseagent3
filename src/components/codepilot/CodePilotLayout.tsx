@@ -2,26 +2,29 @@
 
 import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-  Settings,
-  Wand2,
-  UploadCloud,
-  Copy,
-  Github,
-  Send,
+import { Badge } from "@/components/ui/badge";
+import { ApiKeyModal } from './ApiKeyModal';
+
+import { 
+  Copy, 
+  Download, 
+  Github, 
+  Loader2, 
+  Settings, 
+  Upload, 
+  Cpu, 
+  Code,
   FileText,
-  AlertTriangle,
-  Loader2,
-  Cpu
-} from "lucide-react";
-import { ApiKeyModal } from "./ApiKeyModal";
+  Zap,
+  ExternalLink,
+  Trash2
+} from 'lucide-react';
 import { generateCode, type GenerateCodeInput } from "@/ai/flows/generate-code-from-prompt";
 import { useToast } from "@/hooks/use-toast";
 
